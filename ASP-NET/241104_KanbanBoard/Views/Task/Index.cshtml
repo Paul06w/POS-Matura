@@ -1,0 +1,40 @@
+﻿@model List<_241104_KanbanBoard.Models.KanbanTask>
+@{
+	ViewData["Title"] = "Your Tasks";
+}
+
+<div class="text-center">
+	<a asp-action="CreateOrEditTask" class="btn btn-primary mb-3">Create new Task</a>
+
+	<table id="taskTable" class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<td>Todo</td>
+				<td>Responsible</td>
+				<td>DueDate</td>
+				<td>Editieren</td>
+				<td>Löschen</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			@{
+				foreach(KanbanTask task in Model)
+				{
+					<tr>
+						<td>@task.Todo</td>
+						<td>@task.Responsible</td>
+						<td>@task.DueDate</td>
+						<td>
+							<a asp-route-id="@task.Id" asp-controller="Task" asp-action="CreateOrEditTask" class="btn btn-warning">Edit</a>
+						</td>
+						<td>
+							<a asp-route-id="@task.Id" asp-controller="Task" asp-action="DeleteTask" class="btn btn-danger">Delete</a>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+
+	</table>
+</div>

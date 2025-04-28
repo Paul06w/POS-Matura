@@ -1,0 +1,12 @@
+﻿@model Score
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Multi-User-Zahlenraten</h1>
+</div>
+
+<form asp-action="Check" class="row row-cols-lg-auto justify-content-between">
+    <input hidden asp-for="Id" value="@Model.Id"/>
+</form>

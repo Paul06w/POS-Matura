@@ -1,0 +1,189 @@
+﻿<Window x:Class="_231120_Ritterturnier.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_231120_Ritterturnier"
+        mc:Ignorable="d"
+        Background="DimGray"
+        Title="Ritterturnier" Height="856" Width="1068">
+    
+    
+    <!--<Window.Background>
+        <ImageBrush>
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="//your source .."/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
+    </Window.Background> -->
+    
+    <!--Verwendung nur von * ohne genaue Pixelwerte damit dynamisch-->
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        
+        <ListBox Grid.Column="1" Grid.RowSpan="2" x:Name="listBoxTurnier" ScrollViewer.HorizontalScrollBarVisibility="Visible" VerticalContentAlignment="Center" Margin="10,10,10,10" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False"/>
+
+        <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Knight" Grid.Row="0" Grid.Column="0" FontSize="30" FontWeight="Bold" Foreground="White"/>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Title:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Phone:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Weapon:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Prefix:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="textboxname" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="textboxtitle" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="textboxphone" VerticalAlignment="Center"/>
+                <Grid Grid.Row="3" Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="7*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.ColumnSpan="2" x:Name="imageweapon" Source="/Schwert.png"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="Previous" Click="PreviousImage_Click" Margin="20,0,20,0"/>
+                    <Button Grid.Row="1" Grid.Column="1" Content="Next" Click="NextImage_Click" Margin="20,0,20,0"/>
+                </Grid>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="textboxprefix" VerticalAlignment="Center"/>
+
+
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="1" Width="80" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Add Knight" Click="ButtonAddClick"/>
+                <CheckBox Grid.Row="0" x:Name="checkboxHasScarce" Grid.Column="0" Content="Has Scarce" VerticalAlignment="Center" Foreground="White"/>
+
+            </Grid>
+            
+            
+            
+
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Scarce" Grid.Row="0" Grid.Column="0" FontSize="24" FontWeight="Bold" Foreground="White"/>
+
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Phone:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Content="Grade:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="White"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="textboxscarcename" VerticalAlignment="Center" IsEnabled="{Binding ElementName=checkboxHasScarce, Path=IsChecked}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="textboxscarcephone" VerticalAlignment="Center" IsEnabled="{Binding ElementName=checkboxHasScarce, Path=IsChecked}"/>
+                <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderscarcegrade" VerticalAlignment="Center" Minimum="10" Maximum="100" IsEnabled="{Binding ElementName=checkboxHasScarce, Path=IsChecked}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Content="Save" Click="ButtonSave"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="Load" Click="ButtonLoad"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="Show" Click="ButtonShow"/>
+                <Button Grid.Row="0" Grid.Column="3" Content="Show S" Click="ButtonShowS"/>
+                <Button Grid.Row="0" Grid.Column="4" Content="Show L" Click="ButtonShowL"/>
+                <Button Grid.Row="0" Grid.Column="5" Content="Show K" Click="ButtonShowK"/>
+
+            </Grid>
+
+        </Grid>
+
+
+
+
+    </Grid>
+</Window>

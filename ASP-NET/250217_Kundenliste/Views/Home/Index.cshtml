@@ -1,0 +1,108 @@
+﻿@model List<Kunde>
+@{
+    ViewData["Title"] = "Kundenübersicht";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Kundenliste</h2>
+
+    <div class="d-flex justify-content-center mb-4">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addKundeModal">
+            <i class="fas fa-plus-circle"></i> Neuen Kunden hinzufügen
+        </button>
+    </div>
+
+    <div class="row">
+        @foreach (var kunde in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@kunde.Vorname @kunde.Nachname</h5>
+                        <p class="card-text"><strong>Email:</strong> @kunde.Email</p>
+                        <p class="card-text"><strong>Telefon:</strong> @kunde.Telefonnummer</p>
+                        <p class="card-text"><strong>Adresse:</strong> @kunde.Adresse</p>
+                        <hr />                        
+
+
+                        @if (kunde.ArtikelListe != null && kunde.ArtikelListe.Any())
+                        {
+                            <h6 class="mt-3">Artikel:</h6>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var artikel in kunde.ArtikelListe)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@artikel.Name</strong>: @artikel.Preis
+                                    </li>
+                                }
+                            </ul>
+                        }
+
+                        <form method="post" asp-action="Edit" class="d-inline">
+                            <input type="hidden" name="id" value="@kunde.Id" />
+                            <button type="submit" class="btn btn-secondary mt-2" title="Kunde bearbeiten">
+                                <i class="fas fa-pencil-alt"></i> Bearbeiten
+                            </button>
+                        </form>
+
+                        <form method="post" asp-action="Delete" class="d-inline">
+                            <input type="hidden" name="id" value="@kunde.Id" />
+                            <button type="submit" class="btn btn-danger mt-2" title="Kunde löschen" onclick="return confirm('Möchten Sie diesen Kunden wirklich löschen?');">
+                                <i class="fas fa-trash-alt"></i> Löschen
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Modal für Kunden hinzufügen -->
+    <div class="modal fade" id="addKundeModal" tabindex="-1" aria-labelledby="addKundeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Neuen Kunden hinzufügen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" asp-action="AddKunde">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Vorname</label>
+                            <input type="text" class="form-control" name="vorname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nachname</label>
+                            <input type="text" class="form-control" name="nachname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telefonnummer</label>
+                            <input type="tel" class="form-control" name="telefonnummer" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Adresse</label>
+                            <input type="text" class="form-control" name="adresse" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Geburtsdatum</label>
+                            <input type="date" class="form-control" name="geburtsdatum" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Speichern
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

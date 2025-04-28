@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Kunde
+@{
+    ViewData["Title"] = "Kunden bearbeiten";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Kunden bearbeiten</h2>
+    <div class="card shadow-sm p-4">
+        <form asp-action="EditKunde" method="post">
+            <input asp-for="Id" type="hidden" class="form-control" />
+            <input asp-for="ArtikelListe" type="hidden" class="form-control" />
+            <div class="mb-3">
+                <label class="form-label">Vorname</label>
+                <input asp-for="Vorname" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nachname</label>
+                <input asp-for="Nachname" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefonnummer</label>
+                <input asp-for="Telefonnummer" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Adresse</label>
+                <input asp-for="Adresse" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Geburtsdatum</label>
+                <input asp-for="Geburtsdatum" type="date" class="form-control" />
+            </div>
+
+            <!-- Artikel bearbeiten -->
+            <div id="artikel-container_@Model.Id">
+                <h6>Artikel:</h6>
+                <div id="artikel-list_@Model.Id">
+                    @foreach (var artikel in Model.ArtikelListe)
+                    {
+                        <div class="row align-items-center mb-2 artikel-row">
+                            <input type="hidden" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Id" value="@artikel.Id" />
+                            <input type="hidden" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].KundeId" value="@artikel.KundeId" />
+                            <input type="hidden" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Kunde" value="@artikel.Kunde" />
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Name" value="@artikel.Name" placeholder="Name">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Beschreibung" value="@artikel.Beschreibung" placeholder="Beschreibung">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Preis" value="@artikel.Preis" placeholder="Preis">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Lagerbestand" value="@artikel.Lagerbestand" placeholder="Lagerbestand">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="datetime" class="form-control" name="artikel[@Model.ArtikelListe.IndexOf(artikel)].Erstellungsdatum" value="@artikel.Erstellungsdatum" placeholder="Erstellungsdatum">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger btn-sm remove-artikel-button">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>                
+            </div>
+            
+
+            <!-- Neuen Artikel hinzufügen -->
+            <button type="button" class="btn btn-primary mt-2 addArtikelButton" data-kundeid="@Model.Id">
+                <i class="fas fa-plus"></i> Neuen Artikel hinzufügen
+            </button>
+            
+            <button type="submit" class="btn btn-success mt-2">Speichern</button>
+        </form>
+    </div>
+</div>
+
+<!-- Scrip für dynamische hinzufügen von HTML-Code für Artikel -->
+@section Scripts {
+    <script>
+                $(document).on('click', '.addArtikelButton', function () {
+            console.log("Button 'Neuer Artikel hinzufügen' wurde geklickt!");
+
+            var kundeId = $(this).data('kundeid');
+            var container = $('#artikel-list_' + kundeId);
+
+            var newIndex = container.find('.artikel-row').length;
+            var newRow = `
+                <div class="row align-items-center mb-2 artikel-row">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="artikel[${newIndex}].Name" placeholder="Name">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="artikel[${newIndex}].Beschreibung" placeholder="Beschreibung">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="artikel[${newIndex}].Preis" placeholder="Preis">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" name="artikel[${newIndex}].Lagerbestand" placeholder="Lagerbestand">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" name="artikel[${newIndex}].Erstellungsdatum">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-sm remove-artikel-button">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.append(newRow);
+        });
+
+        // Entfernen eines Artikels
+        $(document).on('click', '.remove-artikel-button', function () {
+            $(this).closest('.artikel-row').remove();
+        });
+    </script>
+}
+
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

@@ -1,0 +1,59 @@
+﻿@* @model List<_240923_JobPortal.Models.JobPosting>*@
+@model _240923_JobPortal.Models.ChuckDTO
+
+@{
+	ViewData["Title"] = "Deine Inserate";
+}
+
+<a class="btn btn-primary" asp-controller="JobPosting" asp-action="CreateEditJobPosting">Neues Inserat erstellen</a>
+
+<h3 style="margin-top: 20px">Mein liebster Chuck Norris Witz:</h3>
+@* <h4 style="border-left: solid 5px"><mark>@ViewData["Message"]</mark></h4> *@
+<h4 style="border-left: solid 5px"><mark>@Model.JokeOfTheDay</mark></h4>
+<p>@Model.Today?.ToShortDateString()</p>
+
+@* @(((DateTime)(ViewData["Today"])).ToShortDateString())
+@{
+    object? obj = ViewData["Today"];
+    if (obj is not null && obj is DateTime)
+    {
+        DateTime today = (DateTime)obj;
+        <p>@today.ToShortDateString()</p>
+    }
+    
+} *@
+
+<div class="text-center">
+    <h1 class="display-4">Deine Jobs</h1>
+</div>
+
+<table id="jobPostingTable" class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <td>Job Title</td>
+            <td>Ort</td>
+            <td>Bild</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            foreach (JobPosting jobPosting in Model.JobPostingList)
+            {
+                <tr>
+                    <td>@jobPosting.JobTitle</td>
+                    <td>@jobPosting.JobLocation</td>
+                    <td>@if (jobPosting.CompanyImage != null)
+                        {
+                            <img src="data:image;base64,@System.Convert.ToBase64String(jobPosting.CompanyImage)" width="20%"/>
+                        }
+                    </td>
+                    <td><a asp-route-id="@jobPosting.Id" asp-controller="JobPosting" asp-action="CreateEditJobPosting" class="btn btn-warning">Edit</a></td>
+                    <td><a asp-route-id="@jobPosting.Id" asp-controller="JobPosting" asp-action="DeleteJobPosting" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

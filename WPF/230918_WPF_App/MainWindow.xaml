@@ -1,0 +1,15 @@
+﻿<Window x:Class="_230918_WPF_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_230918_WPF_App"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,100,0,0" TextWrapping="Wrap" Text="Select a massage option and then choose the Display button." VerticalAlignment="Top" Height="25" Width="325"/>
+        <RadioButton x:Name="HelloButton" Content="Hello" IsChecked="True" HorizontalAlignment="Left" Margin="267,197,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="GoodbyeButton" Content="Goodbye" HorizontalAlignment="Left" Margin="467,197,0,0" VerticalAlignment="Top"/>
+        <Button Content="Display" HorizontalAlignment="Center" Margin="0,333,0,0" VerticalAlignment="Top" Click="button_Click"/>
+    </Grid>
+</Window>

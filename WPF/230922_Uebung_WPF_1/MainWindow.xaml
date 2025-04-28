@@ -1,0 +1,60 @@
+﻿<Window x:Class="_230922_Uebung_WPF_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_230922_Uebung_WPF_1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="400">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- <Label Content="Names" Grid.Row="0" Grid.Column="1"/> -->
+        <!-- <ListBox Grid.Row="1" Grid.Column="0" x:Name="lstNames"/> -->
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,0">
+            <Label Content="Names" Grid.Row="0" Grid.Column="1"/>
+            <TextBox Margin="0,0,0,5" x:Name="txtName"/>
+            <Button Content="Add Name" x:Name="btnAdd" Click="btnAdd_Click"/>
+            <Label Content="Radio Buttons" Margin="0,10,0,0"/>
+            <RadioButton Content="Names" IsChecked="True" Checked="radioButtonName_Checked"/>
+            <RadioButton Content="Website" Checked="radioButtonWebsite_Checked"/>
+            <TextBox Margin="0,10,0,0" x:Name="txtWebsite" FontFamily="Consolas" KeyDown="txtWebsite_KeyDown"/>
+            <Button Content="Add Website" Margin="0,5,0,0" Click="btnWebsite_Click"/>
+            <Button Content="Add Api Request" Margin="0,5,0,0" Click="btnApi_Click"/>
+            <Button Content="Add Api Request Fast" Margin="0,5,0,0" Click="btnApi2_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <ListBox Margin="0,25,5,0" Height="350" x:Name="lstNames" MouseDoubleClick="lstNames_MouseDoubleClick"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="Load" Margin="10,0,0,0" Click="btnLoad_Click"/>
+                <Button Content="Save" Margin="20,0,0,0" Click="btnSave_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <Label Margin="0,10,0,0" Content="Data Grid" Grid.Row="1" Grid.Column="1"/>
+            <DataGrid Margin="0,0,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="dataGridNames"/>
+        </StackPanel>
+        
+        <!-- <ListBox Grid.Row="1" Grid.Column="0" Height="375" Width="auto" Margin="10,30,10,0" VerticalAlignment="Top"></ListBox> -->
+        <!-- <Button Grid.Row="1" Width="75" HorizontalAlignment="Left" Margin="25,430,0,40">Load</Button>  -->
+        <!-- <Button Grid.Row="1" Width="75" HorizontalAlignment="Right" Margin="25,430,25,40">Save</Button> -->
+
+    </Grid>
+
+       
+    
+</Window>

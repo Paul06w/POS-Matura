@@ -1,0 +1,47 @@
+﻿@model Registration
+@{
+    ViewData["Title"] = "Anmeldung zur Aufnahme";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Anmeldung zur Aufnahme</h2>
+    <p class="text-center">
+        Geben Sie die unten angeführten Daten der Schülerin / des Schülers ein, um die Registrierung zu starten.
+    </p>
+    <hr />
+
+    <form asp-action="AnmeldungHTL" method="post">
+        <div class="mb-3">
+            <label for="FirstName" class="form-label">Vorname Schüler/in:</label>
+            <input asp-for="Firstname" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="LastName" class="form-label">Nachname Schüler/in:</label>
+            <input asp-for="Lastname" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="BirthDate" class="form-label">Geburtsdatum Schüler/in:</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label">E-Mail Erziehungsberechtigte/r bzw. eigenberechtigte/r Schüler/in:</label>
+            <input asp-for="Email" type="email" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="DepartmentId" class="form-label">Abteilungswunsch*:</label>
+            <select class="form-control" id="Department" name="Department" required>
+                <option value="">Bitte wählen...</option>
+                @foreach (var department in ViewBag.Departments)
+                {
+                    <option value="@department.Value">@department.Text</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </form>
+</div>

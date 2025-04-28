@@ -1,0 +1,148 @@
+﻿<Window x:Class="_250113_Hogwarts_Viewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_250113_Hogwarts_Viewer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Icon="/Hogwarts.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="1" Content="Hogwarts Viewer" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="ExtraBold" Foreground="White"/>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="1.2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ListView Grid.Row="1" Name="CharacterListView" Margin="10" ItemsSource="{Binding FilteredCharacters}" SelectedItem="{Binding SelectedCharacter}" Background="LightGray">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="House" DisplayMemberBinding="{Binding House}" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            
+            <Grid Grid.Row="0" Grid.Column="0" Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="All Characters" HorizontalAlignment="left" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Foreground="White"/>
+                <Button Grid.Column="1" Content="Load All" Click="LoadAllButton_Click"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" Margin="10,0,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Select a House:" HorizontalAlignment="left" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Foreground="White"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Houses}" SelectedItem="{Binding SelectedHouse}">
+
+
+                </ComboBox>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="1.2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                <StackPanel Background="LightGray">
+                    <TextBlock Text="{Binding SelectedCharacter.Name}" FontSize="18" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="Nicknames:" FontWeight="Bold" Margin="5"/>
+
+                    <ItemsControl ItemsSource="{Binding SelectedCharacter.AlternateNames}" Margin="5">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="Species:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedCharacter.Species}" Margin="5"/>
+                    <TextBlock Text="Birthday:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedCharacter.DateOfBirth}" Margin="5"/>
+                    <TextBlock Text="Wand Material:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedCharacter.Wand.Wood}" Margin="5"/>
+                    <TextBlock Text="Wand Length:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedCharacter.Wand.Length}" Margin="5"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Row="0" Grid.Column="0" Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" Margin="10,0,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2" Margin="0,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="1.2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="1" Source="{Binding SelectedCharacter.ImageSource}" Margin="5" Visibility="{Binding ShowImages}"/>
+
+            <Grid Grid.Row="0" Grid.Column="0" Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <CheckBox Grid.Row="2" Grid.Column="0" Content="Show images" IsChecked="True" Checked="ShowImage_Checked" Unchecked="ShowImage_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+
+        </Grid>
+
+
+    </Grid>
+</Window>

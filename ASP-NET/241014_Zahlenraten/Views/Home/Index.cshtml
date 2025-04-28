@@ -1,0 +1,35 @@
+﻿@model List<_241014_Zahlenraten.Models.Score>
+
+@{
+    ViewData["Title"] = "Highscores";
+}
+
+<div class="text-center">
+    <h1>Highscores</h1>
+    <p>Anmelden und selbst mitspielen!!</p>
+</div>
+
+<table id="highScoreTable" class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <td>Username</td>
+            <td>Tries</td>
+            <td>Target</td>
+            <td>Date</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            foreach (Score score in Model)
+            {
+                <tr>
+                    <td>@score.UserName</td>
+                    <td>@score.Tries</td>
+                    <td>@score.Target</td>
+                    <td>@score.Date</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,72 @@
+﻿@model List<_241104_KanbanBoard.Models.KanbanTask>
+@{
+    ViewData["Title"] = "Kanban Board";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Tasks</h1>
+
+    <table id="kanbanTable" class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <td>Todo</td>
+                <td>In progress</td>
+                <td>Done</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach(KanbanTask task in Model)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                if(task.Status == "todo")
+                                {
+                                    <div>@task.Todo</div>
+                                    <div class="fw-bold">@task.Responsible</div>
+                                    <div>Due: @task.DueDate</div>
+                                    <a asp-route-id="@task.Id" asp-action="ChangeStatus" class="btn btn-secondary btn-block">Do It!</a>
+                                }
+                            }                        
+                        </td>
+                        <td>
+                            @{
+                                if (task.Status == "progress")
+                                {
+                                    <div>@task.Todo</div>
+                                    <div class="fw-bold">@task.Responsible</div>
+                                    <div>Due: @task.DueDate</div>
+                                    <a asp-route-id="@task.Id" asp-action="ChangeStatus" class="btn btn-success btn-block">Done!</a>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                if (task.Status == "done")
+                                {
+                                    <div>@task.Todo - Mission Accomplished!</div>
+                                    <div class="fw-bold">@task.Responsible</div>
+                                    <div>Due: @task.DueDate</div>                                    
+                                    
+                                    if(task.DueDate < task.DoneDate)
+                                    {
+                                        <div>Done: @task.DoneDate :(</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Done: @task.DoneDate</div>
+                                    }
+
+                                    <a asp-route-id="@task.Id" asp-action="ChangeStatus" class="btn btn-warning btn-block">Again!</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>    
+</div>

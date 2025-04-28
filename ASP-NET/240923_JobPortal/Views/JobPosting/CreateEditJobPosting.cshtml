@@ -1,0 +1,56 @@
+﻿@model _240923_JobPortal.Models.JobPosting
+
+@{
+	ViewData["Title"] = "Erstellen oder Bearbeiten";
+}
+
+<!--<form asp-controller="JobPosting" asp-action="CreateEditJob">
+	<modal>
+
+	</modal>
+	
+	
+	Inserate bearbeiten bzw. neu anlegen
+	<br /><input asp-for="JobTitle" type="text" placeholder="Jobbezeichnung"/>
+	<br /><input asp-for="JobLocation" type="text" placeholder="Ortsbezeichnung"/>
+	<br /><button type="submit">Speichern</button>
+</form>-->
+
+<form asp-controller="JobPosting" asp-action="CreateEditJob" class="p-4 shadow bg-light rounded" enctype="multipart/form-data">
+	<h3 class="mb-4">Inserat bearbeiten bzw. neu anlegen</h3>
+	<input hidden asp-for="Id" />
+	<div class="form-group mb-3">
+		<label asp-for="JobTitle" class="form-label">Jobbezeichnung</label>
+		<div class="input-group">
+			<span class="input-group-text">
+				<i class="bi bi-briefcase"></i>
+			</span>
+			<input asp-for="JobTitle" type="text" class="form-control" placeholder="Jobbezeichnung" />
+		</div>
+	</div>
+	<div class="form-group mb-3">
+		<label asp-for="JobLocation" class="form-label">Ortsbezeichnung</label>
+		<div class="input-group">
+			<span class="input-group-text">
+				<i class="bi bi-geo-alt"></i>
+			</span>
+			<input asp-for="JobLocation" type="text" class="form-control" placeholder="Ortsbezeichnung" />
+		</div>
+	</div>
+	<div class="form-group mb-4">
+		<label asp-for="CompanyImage" class="form-label">Bild</label>
+		<div class="input-group">
+			<span class="input-group-text">
+				<i class="bi bi-image"></i>
+			</span>
+			<input class="form-control" name="file" type="file" />
+		</div>
+	</div>
+	<div class="d-grid">
+		<button type="submit" class="btn btn-primary btn-block">Speichern</button>
+	</div>
+</form>
+
+<!-- Bootstrap CSS and Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet" />

@@ -1,0 +1,199 @@
+﻿@model List<_241125_Speisekarte.Models.Speise>
+@{
+    ViewData["Title"] = "Übersicht";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Speisekarte</h1>
+    <h4 class="text-center mb-4">Spezialangebot des Tages: Heute gibt es eine scharfe Soße gratis dazu!!</h4>
+
+    <!-- Button für neue Speise -->
+    <div class="d-flex justify-content-center mb-4">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSpeiseModal">
+            <i class="fas fa-plus-circle"></i> Neue Speise hinzufügen
+        </button>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var speise in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 shadow-lg">
+                    <div class="card-body">
+                        <h4 class="card-title">@speise.Titel</h4>
+                        <p class="card-text"><strong>@speise.Notiz</strong></p>
+                        <hr />
+                        <p class="card-text">Bewertung: @string.Concat(Enumerable.Repeat("⭐", speise.Bewertung))</p>
+
+                        @if (speise.Zutaten != null && speise.Zutaten.Any())
+                        {
+                            <h6 class="mt-3">Zutaten:</h6>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var zutat in speise.Zutaten)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@zutat.Beschreibung</strong>: @zutat.Menge @zutat.Einheit
+                                    </li>
+                                }
+                            </ul>
+                        }
+
+                        <!-- Button für Speise bearbeiten -->
+                        <button class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#editSpeiseModal_@speise.Id" title="Speise bearbeiten">
+                            <i class="fas fa-pencil-alt"></i> Bearbeiten
+                        </button>
+
+                        <!-- Button für Speise löschen -->
+                        <form method="post" asp-action="DeleteSpeise" class="d-inline">
+                            <input type="hidden" name="id" value="@speise.Id" />
+                            <button type="submit" class="btn btn-danger mt-2" title="Speise löschen" onclick="return confirm('Möchten Sie diese Speise wirklich löschen?');">
+                                <i class="fas fa-trash-alt"></i> Löschen
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal für Speise bearbeiten -->
+            <div class="modal fade" id="editSpeiseModal_@speise.Id" tabindex="-1" aria-labelledby="editSpeiseLabel_@speise.Id" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Speise bearbeiten - @speise.Titel</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" asp-action="EditSpeise">
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="@speise.Id" />
+                                <!-- Speise bearbeiten -->
+                                <div class="mb-3">
+                                    <label class="form-label">Titel</label>
+                                    <input type="text" class="form-control" name="titel" value="@speise.Titel" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Notiz</label>
+                                    <input type="text" class="form-control" name="notiz" value="@speise.Notiz">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Bewertung</label>
+                                    <input type="number" class="form-control" name="bewertung" value="@speise.Bewertung" min="1" max="5" required>
+                                </div>
+
+                                <!-- Zutaten bearbeiten -->
+                                <div id="zutaten-container_@speise.Id">
+                                    <h6>Zutaten:</h6>
+                                    <div id="zutaten-list_@speise.Id">
+                                        @foreach (var zutat in speise.Zutaten)
+                                        {
+                                            <div class="row align-items-center mb-2 zutat-row">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control" name="zutaten[@speise.Zutaten.IndexOf(zutat)].Beschreibung" value="@zutat.Beschreibung" placeholder="Beschreibung">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="number" class="form-control" name="zutaten[@speise.Zutaten.IndexOf(zutat)].Menge" value="@zutat.Menge" placeholder="Menge">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" name="zutaten[@speise.Zutaten.IndexOf(zutat)].Einheit" value="@zutat.Einheit" placeholder="Einheit">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-danger btn-sm remove-zutat-button">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <!-- Neue Zutat hinzufügen -->
+                                    <button type="button" class="btn btn-primary mt-2" id="addZutatButton_@speise.Id">
+                                        <i class="fas fa-plus"></i> Neue Zutat hinzufügen
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Speichern
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Modal für Speise hinzufügen -->
+    <div class="modal fade" id="addSpeiseModal" tabindex="-1" aria-labelledby="addSpeiseLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Neue Speise hinzufügen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" asp-action="AddSpeise">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Titel</label>
+                            <input type="text" class="form-control" name="titel" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notiz</label>
+                            <input type="text" class="form-control" name="notiz">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Bewertung</label>
+                            <input type="number" class="form-control" name="bewertung" min="1" max="5" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Speichern
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scrip für dynamische hinzufügen von HTML-Code für Zutaten -->
+@section Scripts {
+    <script>
+        $(document).on('click', 'button[id^="addZutatButton"]', function () {
+            console.log("Button 'Neue Zutat hinzufügen' wurde geklickt!");
+
+            var speiseId = $(this).attr('id').replace('addZutatButton', '');
+            var container = $('#zutaten-list' + speiseId);
+
+            var newIndex = container.find('.zutat-row').length;
+            var newRow = `
+                <div class="row align-items-center mb-2 zutat-row">
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="zutaten[${newIndex}].Beschreibung" placeholder="Beschreibung">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" name="zutaten[${newIndex}].Menge" placeholder="Menge">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="zutaten[${newIndex}].Einheit" placeholder="Einheit">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-sm remove-zutat-button">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.append(newRow);
+        });
+
+        $(document).on('click', '.remove-zutat-button', function () {
+            $(this).closest('.zutat-row').remove();
+        });
+    </script>
+}
+
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

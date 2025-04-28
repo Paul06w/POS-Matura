@@ -1,0 +1,43 @@
+﻿@model List<Registration>
+
+@{
+    ViewData["Title"] = "Schulanmeldung";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Willkommen zur Schulanmeldung</h1>
+    <div class="text-center mb-4">
+        <a asp-action="Anmeldung" class="btn btn-primary mb-3">Hier gehts zur Anmeldung</a>
+    </div>
+
+    <h4>Registrierte Schülerinnen und Schüler</h4>
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Email</th>
+                <th>Geburtsdatum</th>
+                <th>Registriert</th>
+                <th>Zugeteilt</th>
+                <th>Abteilung</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Registration registration in Model)
+            {
+                <tr>
+                    <td>@registration.Firstname</td>
+                    <td>@registration.Lastname</td>
+                    <td>@registration.Email</td>
+                    <td>@registration.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                    <td>@registration.RegistrationDate.ToString("dd.MM.yyyy")</td>
+                    <td class="@(registration.AdmittedDate == null ? "text-danger" : "text-success")">
+                        @(registration.AdmittedDate == null ? "nicht zugeteilt" : "zugeteilt")
+                    </td>
+                    <td>@(registration.Department?.Name ?? "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

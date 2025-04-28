@@ -1,0 +1,16 @@
+﻿@model _241104_KanbanBoard.Models.KanbanTask
+@{
+	ViewData["Title"] = "Erstellen oder Bearbeiten";
+}
+
+
+<form asp-controller="Task" asp-action="EditTask" class="p-4">
+	<h3>Task anlegen oder löschen</h3>
+	<input hidden asp-for="Id" />
+	<input asp-for="Todo" type="text" class="form-control mb-3" placeholder="Task todo"/>
+	<input asp-for="Responsible" type="text" class="form-control mb-3" placeholder="Responsible Person" />
+	<input asp-for="DueDate" class="form-control mb-3" placeholder="DueDate" />
+	<button type="submit" class="btn btn-primary btn-block">Save</button>
+
+</form>
+
